@@ -1,0 +1,48 @@
+app_labgroup_api:
+    resource: "@AppBundle/Controller/LabgroupRESTController.php"
+    type:   rest
+    prefix:   /api
+
+app_student_api:
+    resource: "@AppBundle/Controller/StudentRESTController.php"
+    type:   rest
+    prefix:   /api
+
+app_catching_request_api:
+    resource: "@AppBundle/Controller/CatchingRequestRESTController.php"
+    type:   rest
+    prefix:   /api
+
+app_absence_api:
+    resource: "@AppBundle/Controller/AbsenceRESTController.php"
+    type:   rest
+    prefix:   /api
+
+app_teacher_api:
+    resource: "@AppBundle/Controller/TeacherRESTController.php"
+    type:   rest
+    prefix:   /api
+
+app_note_api:
+    resource: "@AppBundle/Controller/NoteRESTController.php"
+    type:   rest
+    prefix:   /api
+
+app_module_api:
+    resource: "@AppBundle/Controller/ModuleRESTController.php"
+    type:   rest
+    prefix:   /api
+
+app_unit_api:
+    resource: "@AppBundle/Controller/UnitRESTController.php"
+    type:   rest
+    prefix:   /api
+
+app_semester_api:
+    resource: "@AppBundle/Controller/SemesterRESTController.php"
+    type:   rest
+    prefix:   /api
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
