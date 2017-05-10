@@ -16,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use FOS\RestBundle\Controller\Annotations as Rest; // alias pour toutes les annotations
 
 use Voryx\RESTGeneratorBundle\Controller\VoryxController;
 
@@ -41,6 +42,7 @@ class UnitRESTController extends VoryxController
      * Get all Unit entities.
      *
      * @View(serializerEnableMaxDepthChecks=true)
+     * @Rest\Get("/semesters/{id}/units")
      *
      * @param ParamFetcherInterface $paramFetcher
      *
@@ -51,7 +53,7 @@ class UnitRESTController extends VoryxController
      * @QueryParam(name="order_by", nullable=true, array=true, description="Order by fields. Must be an array ie. &order_by[name]=ASC&order_by[description]=DESC")
      * @QueryParam(name="filters", nullable=true, array=true, description="Filter by fields. Must be an array ie. &filters[id]=3")
      */
-    public function cgetAction(ParamFetcherInterface $paramFetcher)
+    public function cgetAction(ParamFetcherInterface $paramFetcher, Request $request)
     {
         try {
             $offset = $paramFetcher->get('offset');
@@ -61,8 +63,17 @@ class UnitRESTController extends VoryxController
 
             $em = $this->getDoctrine()->getManager();
             $entities = $em->getRepository('AppBundle:Unit')->findBy($filters, $order_by, $limit, $offset);
+            $units = array();
             if ($entities) {
-                return $entities;
+
+                foreach ($entities as $unit) {
+                            if($unit->getSemester()->getId() == $request->get('id')){
+                              echo "azertyuiop";
+                              array_push($units,$unit);
+                            }
+                }
+
+                return $units;
             }
 
             return FOSView::create('Not Found', Codes::HTTP_NO_CONTENT);
