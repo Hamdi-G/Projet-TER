@@ -1,5 +1,10 @@
-app_labgroup_api:
-    resource: "@AppBundle/Controller/LabgroupRESTController.php"
+app_teacher_api:
+    resource: "@AppBundle/Controller/TeacherRESTController.php"
+    type:   rest
+    prefix:   /api
+
+app_unit_api:
+    resource: "@AppBundle/Controller/UnitRESTController.php"
     type:   rest
     prefix:   /api
 
@@ -8,18 +13,8 @@ app_student_api:
     type:   rest
     prefix:   /api
 
-app_catching_request_api:
-    resource: "@AppBundle/Controller/CatchingRequestRESTController.php"
-    type:   rest
-    prefix:   /api
-
-app_absence_api:
-    resource: "@AppBundle/Controller/AbsenceRESTController.php"
-    type:   rest
-    prefix:   /api
-
-app_teacher_api:
-    resource: "@AppBundle/Controller/TeacherRESTController.php"
+app_semester_api:
+    resource: "@AppBundle/Controller/SemesterRESTController.php"
     type:   rest
     prefix:   /api
 
@@ -33,16 +28,43 @@ app_module_api:
     type:   rest
     prefix:   /api
 
-app_unit_api:
-    resource: "@AppBundle/Controller/UnitRESTController.php"
+app_catching_request_api:
+    resource: "@AppBundle/Controller/CatchingRequestRESTController.php"
     type:   rest
     prefix:   /api
 
-app_semester_api:
-    resource: "@AppBundle/Controller/SemesterRESTController.php"
+app_labgroup_api:
+    resource: "@AppBundle/Controller/LabgroupRESTController.php"
+    type:   rest
+    prefix:   /api
+
+app_absence_api:
+    resource: "@AppBundle/Controller/AbsenceRESTController.php"
     type:   rest
     prefix:   /api
 
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /profile
+
+fos_oauth_server_token:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
