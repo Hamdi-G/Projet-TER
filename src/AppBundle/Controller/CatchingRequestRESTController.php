@@ -16,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use FOS\RestBundle\Controller\Annotations as Rest; // alias pour toutes les annotations
 
 use Voryx\RESTGeneratorBundle\Controller\VoryxController;
 
@@ -41,6 +42,7 @@ class CatchingRequestRESTController extends VoryxController
      * Get all CatchingRequest entities.
      *
      * @View(serializerEnableMaxDepthChecks=true)
+     * @Rest\Get("/students/{id}/catchingRequests")
      *
      * @param ParamFetcherInterface $paramFetcher
      *
@@ -51,7 +53,7 @@ class CatchingRequestRESTController extends VoryxController
      * @QueryParam(name="order_by", nullable=true, array=true, description="Order by fields. Must be an array ie. &order_by[name]=ASC&order_by[description]=DESC")
      * @QueryParam(name="filters", nullable=true, array=true, description="Filter by fields. Must be an array ie. &filters[id]=3")
      */
-    public function cgetAction(ParamFetcherInterface $paramFetcher)
+    public function cgetAction(ParamFetcherInterface $paramFetcher, Request $request)
     {
         try {
             $offset = $paramFetcher->get('offset');
@@ -61,8 +63,19 @@ class CatchingRequestRESTController extends VoryxController
 
             $em = $this->getDoctrine()->getManager();
             $entities = $em->getRepository('AppBundle:CatchingRequest')->findBy($filters, $order_by, $limit, $offset);
+
+      			$catchingRequests = array();
+
             if ($entities) {
-                return $entities;
+
+                      				foreach ($entities as $catchingRequest)
+                      				{
+                      								if($catchingRequest->getAbsence()->getStudent()->getId() == $request->get('id'))
+                      								{
+                      								  array_push($catchingRequests,$catchingRequest);
+                      								}
+                      				}
+                      				return $catchingRequests;
             }
 
             return FOSView::create('Not Found', Codes::HTTP_NO_CONTENT);
