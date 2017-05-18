@@ -42,7 +42,6 @@ class CatchingRequestRESTController extends VoryxController
      * Get all CatchingRequest entities.
      *
      * @View(serializerEnableMaxDepthChecks=true)
-     * @Rest\Get("/students/{id}/catchingRequests")
      *
      * @param ParamFetcherInterface $paramFetcher
      *
@@ -63,14 +62,47 @@ class CatchingRequestRESTController extends VoryxController
 
             $em = $this->getDoctrine()->getManager();
             $entities = $em->getRepository('AppBundle:CatchingRequest')->findBy($filters, $order_by, $limit, $offset);
+            if ($entities) {
+                      				return $entities;
+            }
+
+            return FOSView::create('Not Found', Codes::HTTP_NO_CONTENT);
+        } catch (\Exception $e) {
+            return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+    /**
+     * Get all CatchingRequest entities.
+     *
+     * @View(serializerEnableMaxDepthChecks=true)
+     * @Rest\Get("students/{student_id}/catchingrequests")
+     *
+     * @param ParamFetcherInterface $paramFetcher
+     *
+     * @return Response
+     *
+     * @QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing notes.")
+     * @QueryParam(name="limit", requirements="\d+", default="20", description="How many notes to return.")
+     * @QueryParam(name="order_by", nullable=true, array=true, description="Order by fields. Must be an array ie. &order_by[name]=ASC&order_by[description]=DESC")
+     * @QueryParam(name="filters", nullable=true, array=true, description="Filter by fields. Must be an array ie. &filters[id]=3")
+     */
+    public function cgetCatchingByIdAction(ParamFetcherInterface $paramFetcher, Request $request)
+    {
+        try {
+            $offset = $paramFetcher->get('offset');
+            $limit = $paramFetcher->get('limit');
+            $order_by = $paramFetcher->get('order_by');
+            $filters = !is_null($paramFetcher->get('filters')) ? $paramFetcher->get('filters') : array();
+
+            $em = $this->getDoctrine()->getManager();
+            $entities = $em->getRepository('AppBundle:CatchingRequest')->findBy($filters, $order_by, $limit, $offset);
 
       			$catchingRequests = array();
 
             if ($entities) {
-
                       				foreach ($entities as $catchingRequest)
                       				{
-                      								if($catchingRequest->getAbsence()->getStudent()->getId() == $request->get('id'))
+                      								if($catchingRequest->getAbsence()->getStudent()->getId() == $request->get('student_id'))
                       								{
                       								  array_push($catchingRequests,$catchingRequest);
                       								}
@@ -83,6 +115,55 @@ class CatchingRequestRESTController extends VoryxController
             return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     * Get all CatchingRequest entities.
+     *
+     * @View(serializerEnableMaxDepthChecks=true)
+     * @Rest\Get("teachers/{teacher_id}/catchingrequests")
+     *
+     * @param ParamFetcherInterface $paramFetcher
+     *
+     * @return Response
+     *
+     * @QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing notes.")
+     * @QueryParam(name="limit", requirements="\d+", default="20", description="How many notes to return.")
+     * @QueryParam(name="order_by", nullable=true, array=true, description="Order by fields. Must be an array ie. &order_by[name]=ASC&order_by[description]=DESC")
+     * @QueryParam(name="filters", nullable=true, array=true, description="Filter by fields. Must be an array ie. &filters[id]=3")
+     */
+    public function cgetCatchingByTeacherIdAction(ParamFetcherInterface $paramFetcher, Request $request)
+    {
+        try {
+            $offset = $paramFetcher->get('offset');
+            $limit = $paramFetcher->get('limit');
+            $order_by = $paramFetcher->get('order_by');
+            $filters = !is_null($paramFetcher->get('filters')) ? $paramFetcher->get('filters') : array();
+
+            $em = $this->getDoctrine()->getManager();
+            $entities = $em->getRepository('AppBundle:CatchingRequest')->findBy($filters, $order_by, $limit, $offset);
+
+            $catchingRequests = array();
+
+            if ($entities) {
+                              foreach ($entities as $catchingRequest)
+                              {
+                                foreach ( ($catchingRequest->getAbsence()->getModule()->getTeachers()) as $teacher)
+                                {
+                                      if($teacher->getId() == $request->get('teacher_id'))
+                                      {
+                                        array_push($catchingRequests,$catchingRequest);
+                                      }
+                                }
+                              }
+                              return $catchingRequests;
+            }
+
+            return FOSView::create('Not Found', Codes::HTTP_NO_CONTENT);
+        } catch (\Exception $e) {
+            return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     /**
      * Create a CatchingRequest entity.
      *
