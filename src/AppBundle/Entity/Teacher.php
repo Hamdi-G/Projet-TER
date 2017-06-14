@@ -65,6 +65,13 @@ class Teacher extends BaseUser
      */
     private $photo;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="admin", type="string", length=255)
+     */
+    private $admin;
+
     public function __construct()
     {
         parent::__construct();
@@ -216,5 +223,29 @@ class Teacher extends BaseUser
     public function getPhoto()
     {
         return $this->photo;
+    }
+
+    /**
+     * Set admin
+     *
+     * @param string $admin
+     *
+     * @return Teacher
+     */
+    public function setAdmin($admin)
+    {
+        $this->admin = $admin;
+
+        return $this;
+    }
+
+    /**
+     * Get admin
+     *
+     * @return string
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
     }
 }

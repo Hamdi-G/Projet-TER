@@ -89,7 +89,7 @@ nelmio_cors:
             allow_origin: ['*']
             allow_headers: ['*']
             allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
-            max_age: 3600
+            max_age: 28800
 
 sensio_framework_extra:
     request: { converters: true }
