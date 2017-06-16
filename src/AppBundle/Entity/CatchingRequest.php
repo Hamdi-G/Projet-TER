@@ -18,6 +18,13 @@ class CatchingRequest
       */
       private $absence;
 
+      /**
+      * @ORM\ManyToOne(targetEntity="Module")
+      * @ORM\JoinColumn(nullable=false)
+      */
+      private $module;
+
+
     /**
      * @var int
      *
@@ -37,7 +44,7 @@ class CatchingRequest
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="hour", type="time")
+     * @ORM\Column(name="hour", type="datetime")
      */
     private $hour;
 
@@ -49,16 +56,16 @@ class CatchingRequest
     private $date;
 
     /**
-     * @var bool
+     * @var int
      *
-     * @ORM\Column(name="teacherdecision", type="boolean")
+     * @ORM\Column(name="teacherdecision", type="integer")
      */
     private $teacherdecision;
 
     /**
-     * @var bool
+     * @var int
      *
-     * @ORM\Column(name="admindecision", type="boolean")
+     * @ORM\Column(name="admindecision", type="integer")
      */
     private $admindecision;
 
@@ -209,5 +216,29 @@ class CatchingRequest
     public function getAbsence()
     {
         return $this->absence;
+    }
+
+    /**
+     * Set module
+     *
+     * @param \AppBundle\Entity\Module $module
+     *
+     * @return CatchingRequest
+     */
+    public function setModule(\AppBundle\Entity\Module $module)
+    {
+        $this->module = $module;
+
+        return $this;
+    }
+
+    /**
+     * Get module
+     *
+     * @return \AppBundle\Entity\Module
+     */
+    public function getModule()
+    {
+        return $this->module;
     }
 }

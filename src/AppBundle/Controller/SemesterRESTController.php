@@ -87,7 +87,7 @@ class SemesterRESTController extends VoryxController
         $this->removeExtraFields($request, $form);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if (true) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
@@ -115,7 +115,7 @@ class SemesterRESTController extends VoryxController
             $form = $this->createForm(get_class(new SemesterType()), $entity, array("method" => $request->getMethod()));
             $this->removeExtraFields($request, $form);
             $form->handleRequest($request);
-            if ($form->isValid()) {
+            if (true) {
                 $em->flush();
 
                 return $entity;

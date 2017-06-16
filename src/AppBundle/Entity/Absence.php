@@ -17,11 +17,7 @@ class Absence
   * @ORM\JoinColumn(nullable=false)
   */
   private $student;
-  /**
-  * @ORM\ManyToOne(targetEntity="Module")
-  * @ORM\JoinColumn(nullable=false)
-  */
-  private $module;
+
   /**
   * @var int
   *

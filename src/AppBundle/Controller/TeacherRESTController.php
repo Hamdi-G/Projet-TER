@@ -87,7 +87,7 @@ class TeacherRESTController extends VoryxController
         $this->removeExtraFields($request, $form);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if (true) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();

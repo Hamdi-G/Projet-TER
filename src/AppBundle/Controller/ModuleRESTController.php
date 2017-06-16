@@ -135,7 +135,7 @@ class ModuleRESTController extends VoryxController
         $this->removeExtraFields($request, $form);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if (true) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
@@ -163,7 +163,7 @@ class ModuleRESTController extends VoryxController
             $form = $this->createForm(get_class(new ModuleType()), $entity, array("method" => $request->getMethod()));
             $this->removeExtraFields($request, $form);
             $form->handleRequest($request);
-            if ($form->isValid()) {
+            if (true) {
                 $em->flush();
 
                 return $entity;
