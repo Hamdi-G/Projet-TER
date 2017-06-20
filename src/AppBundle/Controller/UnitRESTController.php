@@ -110,7 +110,6 @@ class UnitRESTController extends VoryxController
 
                 foreach ($entities as $unit) {
                             if($unit->getSemester()->getId() == $request->get('id')){
-                              echo "azertyuiop";
                               array_push($units,$unit);
                             }
                 }

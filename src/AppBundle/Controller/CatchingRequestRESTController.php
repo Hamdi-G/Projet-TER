@@ -147,7 +147,7 @@ class CatchingRequestRESTController extends VoryxController
             if ($entities) {
                               foreach ($entities as $catchingRequest)
                               {
-                                foreach ( ($catchingRequest->getAbsence()->getModule()->getTeachers()) as $teacher)
+                                foreach ( ($catchingRequest->getModule()->getTeachers()) as $teacher)
                                 {
                                       if($teacher->getId() == $request->get('teacher_id'))
                                       {
