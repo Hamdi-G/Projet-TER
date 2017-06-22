@@ -13,9 +13,15 @@ class CatchingRequestType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('type')->add('hour')->add('date')->add('teacherdecision')->add('admindecision')->add('absence');
+        $builder->add('absence')
+                ->add('module')
+                ->add('type')
+                ->add('hour')
+                ->add('date')
+                ->add('teacherdecision')
+                ->add('admindecision');
     }
-    
+
     /**
      * {@inheritdoc}
      */

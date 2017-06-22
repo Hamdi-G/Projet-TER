@@ -179,6 +179,8 @@ class CatchingRequestRESTController extends VoryxController
         $entity = new CatchingRequest();
         $form = $this->createForm(get_class(new CatchingRequestType()), $entity, array("method" => $request->getMethod()));
         $this->removeExtraFields($request, $form);
+        $entity->setDate(new \DateTime($this->get('request')->get('date')));
+        $entity->setHour(new \DateTime($this->get('request')->get('hour')));
         $form->handleRequest($request);
 
         if (true) {

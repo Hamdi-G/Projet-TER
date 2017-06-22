@@ -123,7 +123,7 @@ class AbsenceRESTController extends VoryxController
      * @View(statusCode=201, serializerEnableMaxDepthChecks=true)
      *
      * @param Request $request
-     *
+     * @param Converter($request.get('startd'), options={"format": "Y-m-d"})
      * @return Response
      *
      */
@@ -132,7 +132,21 @@ class AbsenceRESTController extends VoryxController
         $entity = new Absence();
         $form = $this->createForm(get_class(new AbsenceType()), $entity, array("method" => $request->getMethod()));
         $this->removeExtraFields($request, $form);
+        $entity->setStartd(new \DateTime($this->get('request')->get('startd')));
+        $entity->setEndd(new \DateTime($this->get('request')->get('endd')));
+        $entity->setStarth(new \DateTime($this->get('request')->get('starth')));
+        $entity->setEndh(new \DateTime($this->get('request')->get('endh')));
         $form->handleRequest($request);
+
+        //$form->bindRequest($request);
+        /*$entity->setStudent($request.get('student'))
+               ->setStarth($request.get('starth'))
+               ->setEndh($request.get('endh'))
+               ->setStartd($request.get('startd'))
+               ->setEndd($request.get('endd'))
+               ->setReason($request.get('reason'))
+               ->setState($request.get('state'));*/
+               //$form->handleRequest($request);
 
         if (true) {
             $em = $this->getDoctrine()->getManager();
